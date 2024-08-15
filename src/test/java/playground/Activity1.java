@@ -16,17 +16,18 @@ public class Activity1 {
     @BeforeMethod
     public void openFacebook() {
         driver = new ChromeDriver();
-        driver.get("https://facebook.com");
+        driver.get("https://microsoft.com");
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
     }
 
     @Test
     public void facebookTitle() {
-       String applicationTitle = driver.getTitle();
-        Assert.assertEquals(applicationTitle, "Facebook - log in or sign up" );
+        String applicationTitle = driver.getTitle();
+        Assert.assertEquals(applicationTitle, "Facebook - log in or sign up");
     }
+
     @AfterMethod
-    public void quitBrowser(){
+    public void quitBrowser() {
         driver.quit();
     }
 }

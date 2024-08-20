@@ -1,0 +1,9 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Spartans TestNG Framework">
+    <test name="Smoke Tests">
+        <packages>
+            <package name="tek.tdd.tests" />
+
+        </packages>
+    </test>
+</suite>

@@ -25,4 +25,16 @@ public class SignUpPage extends SeleniumUtility {
 
     @FindBy(id = "signupBtn")
     public WebElement signUpBtn;
+
+    @FindBy(className = "error")
+    public WebElement signUpError;
+
+    public void fillUpCreateAccountForm(String name, String email, String password) {
+        sendText(nameInput, name);
+        sendText(emailInput, email);
+        sendText(passwordInput, password);
+        sendText(confirmPasswordInput, password);
+
+        clickOnButton(signUpBtn);
+    }
 }

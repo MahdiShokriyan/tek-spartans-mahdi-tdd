@@ -4,6 +4,7 @@ import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import tek.tdd.base.UIBaseClass;
+import tek.tdd.utility.DataGenerator;
 
 public class CreateAccountTest extends UIBaseClass {
 
@@ -13,35 +14,30 @@ public class CreateAccountTest extends UIBaseClass {
     Validate New Account Created.
     */
 
-    @Test(dataProvider = "CreateAccountData")
-    public void createAccount(String name, String email, String password) {
+    @Test
+    public void createAccount() {
+        String expectedEmail = DataGenerator.RandomEmailGenerator("sorosh");
         clickOnButton(homePage.signInLink);
         clickOnButton(signInPage.createNewAccountBtn);
-        sendText(signUpPage.nameInput, name);
-        sendText(signUpPage.emailInput, email);
-        sendText(signUpPage.passwordInput, password);
-        sendText(signUpPage.confirmPasswordInput, password);
-        clickOnButton(signUpPage.signUpBtn);
+     signUpPage.fillUpCreateAccountForm("sorosh", expectedEmail,"Password@123");
 
         String actualEmail = getElementText(accountPage.emailTitle);
 
-        Assert.assertEquals(actualEmail, email, "Emails should Match");
+        Assert.assertEquals(actualEmail, expectedEmail, "Emails should Match");
     }
 
-    public static String RandomEmailGenerator(String name) {
+    @Test
+    public void createAccountWithExistedAccount(){
+        clickOnButton(homePage.signInLink);
+        clickOnButton(signInPage.createNewAccountBtn);
+        signUpPage.fillUpCreateAccountForm("mahdi",
+                "Mahdi.mahdi1@gmail.com",
+                "Password@123");
 
-        int randomNumber = (int) (Math.random() * 10000);
-        return name + randomNumber + "@gmail.com";
-    }
-
-    @DataProvider(name = "CreateAccountData")
-    private String[][] createNewAccountData() {
-        return new String[][]{
-                {"John", RandomEmailGenerator("John"), "Password@123"},
-                {"John", RandomEmailGenerator("John"), "Password@123"},
-                {"John", RandomEmailGenerator("John"), "Password@123"},
-                {"John", RandomEmailGenerator("John"), "Password@123"},
-        };
+        String actualResult = getElementText(signUpPage.signUpError);
+        Assert.assertEquals(actualResult,
+                "this email is already exist, please use another email address",
+                "both Massage should be the same");
     }
 
 }

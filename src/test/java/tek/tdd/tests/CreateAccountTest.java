@@ -28,10 +28,19 @@ public class CreateAccountTest extends UIBaseClass {
         Assert.assertEquals(actualEmail, email, "Emails should Match");
     }
 
+    public static String RandomEmailGenerator(String name) {
+
+        int randomNumber = (int) (Math.random() * 10000);
+        return name + randomNumber + "@gmail.com";
+    }
+
     @DataProvider(name = "CreateAccountData")
     private String[][] createNewAccountData() {
         return new String[][]{
-                {"mahdi", "veryWrong@email.com", "Password@123"},
+                {"John", RandomEmailGenerator("John"), "Password@123"},
+                {"John", RandomEmailGenerator("John"), "Password@123"},
+                {"John", RandomEmailGenerator("John"), "Password@123"},
+                {"John", RandomEmailGenerator("John"), "Password@123"},
         };
     }
 

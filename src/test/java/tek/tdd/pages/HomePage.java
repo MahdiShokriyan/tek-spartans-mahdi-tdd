@@ -14,7 +14,6 @@ public class HomePage extends SeleniumUtility {
     public WebElement topLeftLogo ;
     @FindBy(linkText = "Sign in")
     public WebElement signInLink;
-
     @FindBy(id = "accountLink")
     public WebElement accountLink;
 

@@ -15,11 +15,24 @@ public class SignInPage extends SeleniumUtility {
     public WebElement signInTitle;
 
     @FindBy(id = "email")
-    public WebElement email;
+    public WebElement emailInput;
 
     @FindBy(id="password")
-    public WebElement password;
+    public WebElement passwordInput;
 
     @FindBy(id = "loginBtn")
     public WebElement loginButton;
+
+    @FindBy(className = "error")
+    public WebElement errorMessage;
+
+    public void doSignin(String email, String password){
+        sendText(emailInput,email);
+        sendText(passwordInput,password);
+        clickOnButton(loginButton);
+    }
+
+    @FindBy(id = "newAccountBtn")
+    public WebElement createNewAccountBtn;
+
 }

@@ -65,4 +65,5 @@ public class SeleniumUtility extends BaseSetup {
         LOGGER.debug("Checking element Enabled status {} ", element);
         return getWait().until(ExpectedConditions.visibilityOf(element)).isDisplayed();
     }
+
 }

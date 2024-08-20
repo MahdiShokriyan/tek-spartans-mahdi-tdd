@@ -1,10 +1,8 @@
 package tek.tdd.tests;
 
-import org.openqa.selenium.By;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import tek.tdd.base.UIBaseClass;
-import tek.tdd.pages.HomePage;
 
 public class BasicSetupTest extends UIBaseClass {
 

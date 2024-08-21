@@ -19,7 +19,7 @@ import java.util.Properties;
 public abstract class BaseSetup {
     //read config file
     private static final Logger LOGGER = LogManager.getLogger(BaseSetup.class);
-    protected static final long WAIT_TIME_IN_SECOND = 25;
+    protected static final long WAIT_TIME_IN_SECOND = 15;
 
     private static WebDriver driver;
     private final Properties properties;

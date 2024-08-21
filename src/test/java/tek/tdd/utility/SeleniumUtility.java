@@ -1,5 +1,7 @@
 package tek.tdd.utility;
 
+import com.aventstack.extentreports.model.Media;
+import com.aventstack.extentreports.service.ExtentTestManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
@@ -40,7 +42,9 @@ public class SeleniumUtility extends BaseSetup {
 
     public void clickOnButton(WebElement element) {
         LOGGER.info("you Click on an element {}", element);
+        ExtentTestManager.getTest().info("Click on the the Element: " + element.getText());
         getWait().until(ExpectedConditions.elementToBeClickable(element)).click();
+
     }
 
     public boolean isElementEnable(By locator) {
@@ -68,15 +72,19 @@ public class SeleniumUtility extends BaseSetup {
         LOGGER.debug("Checking element Enabled status {} ", element);
         return getWait().until(ExpectedConditions.visibilityOf(element)).isDisplayed();
     }
+    public boolean isElementDisplayed(By locator) {
+        LOGGER.debug("Checking element Enabled status {} ", locator);
+        return getWait().until(ExpectedConditions.visibilityOfElementLocated(locator)).isDisplayed();
+    }
 
     public List<WebElement> getAllElements(WebElement element) {
-
         return getWait().until(ExpectedConditions.visibilityOfAllElements(element));
     }
 
-    public void clearField(WebElement element){
+    public void clearField(WebElement element) {
         getWait().until(ExpectedConditions.visibilityOfAllElements(element))
                 .clear();
     }
+
 
 }

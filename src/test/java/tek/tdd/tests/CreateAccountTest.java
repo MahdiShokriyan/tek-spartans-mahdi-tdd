@@ -1,5 +1,6 @@
 package tek.tdd.tests;
 
+import com.aventstack.extentreports.service.ExtentTestManager;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -22,7 +23,7 @@ public class CreateAccountTest extends UIBaseClass {
         String expectedEmail = DataGenerator.RandomEmailGenerator("sorosh");
         clickOnButton(homePage.signInLink);
         clickOnButton(signInPage.createNewAccountBtn);
-     signUpPage.fillUpCreateAccountForm("sorosh", expectedEmail,"Password@123");
+        signUpPage.fillUpCreateAccountForm("sorosh", expectedEmail, "Password@123");
 
         String actualEmail = getElementText(accountPage.emailTitle);
 
@@ -30,7 +31,7 @@ public class CreateAccountTest extends UIBaseClass {
     }
 
     @Test
-    public void createAccountWithExistedAccount(){
+    public void createAccountWithExistedAccount() {
         clickOnButton(homePage.signInLink);
         clickOnButton(signInPage.createNewAccountBtn);
         signUpPage.fillUpCreateAccountForm("mahdi",
@@ -44,7 +45,7 @@ public class CreateAccountTest extends UIBaseClass {
     }
 
     @Test
-    public void validateAllError(){
+    public void validateAllError() {
         clickOnButton(homePage.signInLink);
         clickOnButton(signInPage.createNewAccountBtn);
         clickOnButton(signUpPage.signUpBtn);
@@ -56,9 +57,9 @@ public class CreateAccountTest extends UIBaseClass {
                 "Password is a required field",
                 "Confirm Password is a required field");
 
-        Assert.assertEquals(actualErrorList.size(),expectedResult.size());
+        Assert.assertEquals(actualErrorList.size(), expectedResult.size());
 
-        for (int i = 0 ; i < actualErrorList.size(); i++){
+        for (int i = 0; i < actualErrorList.size(); i++) {
             Assert.assertEquals(
                     getElementText(actualErrorList.get(i)),
                     expectedResult.get(i));

@@ -9,6 +9,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import tek.tdd.base.BaseSetup;
 
 import java.time.Duration;
+import java.util.List;
 
 public class SeleniumUtility extends BaseSetup {
     private static final Logger LOGGER = LogManager.getLogger(SeleniumUtility.class);
@@ -36,6 +37,7 @@ public class SeleniumUtility extends BaseSetup {
         LOGGER.info("you Click on an element {}", locator);
         getWait().until(ExpectedConditions.elementToBeClickable(locator)).click();
     }
+
     public void clickOnButton(WebElement element) {
         LOGGER.info("you Click on an element {}", element);
         getWait().until(ExpectedConditions.elementToBeClickable(element)).click();
@@ -57,13 +59,24 @@ public class SeleniumUtility extends BaseSetup {
 
     public void sendText(WebElement element, String text) {
         LOGGER.debug("Sending text {} to Element {}", text, element);
-       WebElement targetElement = getWait().until(ExpectedConditions.visibilityOf(element));
-       targetElement.clear();
-       targetElement.sendKeys(text);
+        WebElement targetElement = getWait().until(ExpectedConditions.visibilityOf(element));
+        targetElement.clear();
+        targetElement.sendKeys(text);
     }
-    public boolean isElementDisplayed(WebElement element){
+
+    public boolean isElementDisplayed(WebElement element) {
         LOGGER.debug("Checking element Enabled status {} ", element);
         return getWait().until(ExpectedConditions.visibilityOf(element)).isDisplayed();
+    }
+
+    public List<WebElement> getAllElements(WebElement element) {
+
+        return getWait().until(ExpectedConditions.visibilityOfAllElements(element));
+    }
+
+    public void clearField(WebElement element){
+        getWait().until(ExpectedConditions.visibilityOfAllElements(element))
+                .clear();
     }
 
 }

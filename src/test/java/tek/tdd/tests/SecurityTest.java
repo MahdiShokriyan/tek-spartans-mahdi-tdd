@@ -13,7 +13,7 @@ public class SecurityTest extends UIBaseClass {
         String actualResult = getElementText(signInPage.signInTitle);
         Assert.assertEquals(actualResult, "Sign in",
                 "the title Should be Sign in ");
-        signInPage.doSignin("mahdi.mahdi1@gmail.com", "Mahdi123!");
+        signInPage.doSignin("mahdi.mahdi1@gmail.com", "Password@123");
         boolean isDisplayed = isElementDisplayed(homePage.accountLink);
         Assert.assertTrue(isDisplayed);
     }

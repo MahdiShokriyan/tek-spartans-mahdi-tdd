@@ -26,12 +26,15 @@ public class AccountPage extends SeleniumUtility {
     public WebElement updateButton;
 
     @FindBy(className = "Toastify__toast-body")
-    private By toastifyLocator;
+    public WebElement toastifyLocator;
+
+    @FindBy(className = "account__information-username")
+    public WebElement accountUserNameText;
 
 
-    public void isToastDisplayed() {
-        boolean isToastDisplayed = isElementDisplayed(toastifyLocator);
-        Assert.assertTrue(isToastDisplayed);
+    public boolean isToastDisplayed() {
+       return isElementDisplayed(toastifyLocator);
+
     }
 
     public void waitForSeconds(Integer seconds) {

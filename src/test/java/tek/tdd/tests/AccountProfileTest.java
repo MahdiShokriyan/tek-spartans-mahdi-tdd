@@ -1,5 +1,6 @@
 package tek.tdd.tests;
 
+import org.testng.Assert;
 import org.testng.annotations.Test;
 import tek.tdd.base.UIBaseClass;
 
@@ -10,14 +11,19 @@ public class AccountProfileTest extends UIBaseClass {
         clickOnButton(homePage.signInLink);
         signInPage.doSignin("mahdi@gmail.com", "Password@123");
         clickOnButton(homePage.accountLink);
-        sendText(accountPage.nameInput, "mark");
-        sendText(accountPage.phoneNumberInput, "5715724354");
+        sendText(accountPage.nameInput, "mahdi");
+        sendText(accountPage.phoneNumberInput, "1234567890");
         clickOnButton(accountPage.updateButton);
-        accountPage.isToastDisplayed();
+        Assert.assertTrue(accountPage.isToastDisplayed());
+        String actualUserName = getElementText(accountPage.accountUserNameText);
+        Assert.assertEquals(actualUserName, "mahdi", "both name should be the same");
         accountPage.waitForSeconds(6);
-        sendText(accountPage.nameInput, "John");
-        sendText(accountPage.phoneNumberInput, "9871234567");
+        sendText(accountPage.nameInput, "Doe John");
+        sendText(accountPage.phoneNumberInput, "9871234578");
         clickOnButton(accountPage.updateButton);
-        accountPage.isToastDisplayed();
+        Assert.assertTrue(accountPage.isToastDisplayed());
+        String actualUserNameRevert = getElementText(accountPage.accountUserNameText);
+        Assert.assertEquals(actualUserNameRevert, "Doe John", "both name should be the same");
+
     }
 }

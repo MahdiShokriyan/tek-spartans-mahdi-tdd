@@ -1,6 +1,5 @@
 package tek.tdd.utility;
 
-import com.aventstack.extentreports.model.Media;
 import com.aventstack.extentreports.service.ExtentTestManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -11,23 +10,12 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import tek.tdd.base.BaseSetup;
 
 import java.time.Duration;
-import java.util.List;
 
 public class SeleniumUtility extends BaseSetup {
     private static final Logger LOGGER = LogManager.getLogger(SeleniumUtility.class);
 
     private WebDriverWait getWait() {
         return new WebDriverWait(getDriver(), Duration.ofSeconds(WAIT_TIME_IN_SECOND));
-    }
-
-    private WebElement waitForVisibilityByElement(By locator) {
-
-        return getWait().until(ExpectedConditions.visibilityOfElementLocated(locator));
-    }
-
-    public String getElementText(By locator) {
-        LOGGER.debug("Returning element Text {}", locator);
-        return waitForVisibilityByElement(locator).getText();
     }
 
     public String getElementText(WebElement element) {
@@ -45,13 +33,6 @@ public class SeleniumUtility extends BaseSetup {
         ExtentTestManager.getTest().info("Click on the the Element: " + element.getText());
         getWait().until(ExpectedConditions.elementToBeClickable(element)).click();
 
-    }
-
-    public boolean isElementEnable(By locator) {
-        LOGGER.debug("checking element have enable status {}", locator);
-        boolean isEnabled = waitForVisibilityByElement(locator).isEnabled();
-        LOGGER.debug(" element is enables status {}", isEnabled);
-        return isEnabled;
     }
 
     public boolean isElementEnable(WebElement element) {
@@ -72,19 +53,4 @@ public class SeleniumUtility extends BaseSetup {
         LOGGER.debug("Checking element Enabled status {} ", element);
         return getWait().until(ExpectedConditions.visibilityOf(element)).isDisplayed();
     }
-    public boolean isElementDisplayed(By locator) {
-        LOGGER.debug("Checking element Enabled status {} ", locator);
-        return getWait().until(ExpectedConditions.visibilityOfElementLocated(locator)).isDisplayed();
-    }
-
-    public List<WebElement> getAllElements(WebElement element) {
-        return getWait().until(ExpectedConditions.visibilityOfAllElements(element));
-    }
-
-    public void clearField(WebElement element) {
-        getWait().until(ExpectedConditions.visibilityOfAllElements(element))
-                .clear();
-    }
-
-
 }

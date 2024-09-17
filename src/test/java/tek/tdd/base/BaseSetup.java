@@ -1,5 +1,6 @@
 package tek.tdd.base;
 
+import io.restassured.RestAssured;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
@@ -32,6 +33,9 @@ public abstract class BaseSetup {
            InputStream inputStream = new FileInputStream(configFilePath);
            properties = new Properties();
            properties.load(inputStream);
+
+           RestAssured.baseURI = properties.getProperty("api.url");
+
        }catch (IOException ioException){
            LOGGER.error("Config file error with message{}", ioException.getMessage());
            throw new RuntimeException("Config file error with message"+ ioException.getMessage());

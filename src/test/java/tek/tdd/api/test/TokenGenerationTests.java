@@ -14,8 +14,8 @@ public class TokenGenerationTests extends ApiTestsBase {
     public void loginCredential(String username, String password) {
         RequestSpecification request = getDefaultRequest();
         Map<String, String> requestBody = new HashMap<>();
-        requestBody.put("username", "username");
-        requestBody.put("password", "password");
+        requestBody.put("username", username);
+        requestBody.put("password", password);
         request.body(requestBody);
 
         Response response = request.when().post("/api/token");

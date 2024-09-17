@@ -1,11 +1,9 @@
 package tek.tdd.api.test;
 
-import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import org.testng.annotations.Test;
 import tek.tdd.base.ApiTestsBase;
-
 import java.util.HashMap;
 import java.util.Map;
 

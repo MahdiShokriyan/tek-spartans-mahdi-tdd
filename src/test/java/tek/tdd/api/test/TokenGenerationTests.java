@@ -2,32 +2,59 @@ package tek.tdd.api.test;
 
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.testng.Assert;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+import tek.tdd.api.model.EndPoints;
 import tek.tdd.base.ApiTestsBase;
-import java.util.HashMap;
+
 import java.util.Map;
 
 public class TokenGenerationTests extends ApiTestsBase {
+    public static final Logger LOGGER = LogManager.getLogger(TokenGenerationTests.class);
 
-    public void loginCredential(String username, String password) {
-        RequestSpecification request = getDefaultRequest();
-        Map<String, String> requestBody = new HashMap<>();
-        requestBody.put("username", username);
-        requestBody.put("password", password);
-        request.body(requestBody);
+    public Response loginWithCredential(String username, String password) {
+        RequestSpecification requestSpecification = getDefaultRequest();
+        Map<String, String> body = getTokenRequestBody(username,password);
+        requestSpecification.body(body);
+        //Send request to /api/token
+        return requestSpecification.when().post(EndPoints.TOKEN.getValue());
 
-        Response response = request.when().post("/api/token");
+    }
+
+    //Create a test validate token generated with supervisor User
+    @Test(dataProvider = "credentials")
+    public void generateValidToken(String username, String password) {
+        Response response = loginWithCredential(username, password);
         response.then().statusCode(200);
-        response.prettyPrint();
+        LOGGER.info("Response is {}", response.asPrettyString());
     }
 
-    @Test
-    public void getValidToken() {
-        loginCredential("supervisor", "tek_supervisor");
+    @DataProvider(name = "credentials")
+    private String[][] credentials() {
+        return new String[][]{
+                {"supervisor", "tek_supervisor"},
+                {"operator_readonly", "Tek4u2024"},
+        };
     }
 
-    @Test
-    public void getReadOnlyToken() {
-        loginCredential("operator_readonly", "Tek4u2024");
+    @Test(dataProvider = "wrongCredentials")
+    public void logInWithWrongCredential(String username, String password, int statusCode,
+                                         String errorMessage) {
+        Response response = loginWithCredential(username, password);
+        response.then().statusCode(statusCode);
+
+        String actualErrorMessage = response.body().jsonPath().getString("errorMessage");
+        Assert.assertEquals(actualErrorMessage, errorMessage, "both should match");
+    }
+
+    @DataProvider(name = "wrongCredentials")
+    private Object[][] wrongCredentials() {
+        return new Object[][]{
+                {"wrongUserName", "tek_supervisor", 404, "User wrongUserName not found"},
+                {"supervisor", "wrongPassword", 400, "Password not matched"},
+        };
     }
 }

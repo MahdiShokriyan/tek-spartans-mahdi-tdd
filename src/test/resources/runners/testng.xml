@@ -3,7 +3,6 @@
     <test name="Smoke Tests">
         <packages>
             <package name="tek.tdd.tests" />
-
         </packages>
     </test>
 </suite>

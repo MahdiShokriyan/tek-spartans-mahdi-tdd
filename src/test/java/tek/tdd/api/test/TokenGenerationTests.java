@@ -1,5 +1,6 @@
 package tek.tdd.api.test;
 
+import com.aventstack.extentreports.service.ExtentTestManager;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import org.apache.logging.log4j.LogManager;
@@ -7,7 +8,10 @@ import org.apache.logging.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-import tek.tdd.api.model.EndPoints;
+import tek.tdd.api.models.AccountType;
+import tek.tdd.api.models.EndPoints;
+import tek.tdd.api.models.TokenRequest;
+import tek.tdd.api.models.TokenResponse;
 import tek.tdd.base.ApiTestsBase;
 
 import java.util.Map;
@@ -17,7 +21,7 @@ public class TokenGenerationTests extends ApiTestsBase {
 
     public Response loginWithCredential(String username, String password) {
         RequestSpecification requestSpecification = getDefaultRequest();
-        Map<String, String> body = getTokenRequestBody(username,password);
+        Map<String, String> body = getTokenRequestBody(username, password);
         requestSpecification.body(body);
         //Send request to /api/token
         return requestSpecification.when().post(EndPoints.TOKEN.getValue());
@@ -57,4 +61,36 @@ public class TokenGenerationTests extends ApiTestsBase {
                 {"supervisor", "wrongPassword", 400, "Password not matched"},
         };
     }
+
+    @Test
+    public void generateTokenUseObjectAsBody() {
+        RequestSpecification request = getDefaultRequest();
+
+        TokenRequest requestBody = new TokenRequest("supervisor", "tek_supervisor");
+
+        request.body(requestBody);
+
+        Response response = request.when().post(EndPoints.TOKEN.getValue());
+
+        response.then().statusCode(200);
+        response.prettyPrint();
+    }
+
+    @Test
+    public void convertResponseToPOJO() {
+        TokenRequest tokenRequest = new TokenRequest("supervisor", "tek_supervisor");
+        Response response = getDefaultRequest()
+                .body(tokenRequest)
+                .when().post(EndPoints.TOKEN.getValue())
+                .then().statusCode(200)
+                .extract().response();
+        ExtentTestManager.getTest().info(response.asPrettyString());
+
+        TokenResponse token = response.body().jsonPath().getObject("", TokenResponse.class);
+        Assert.assertEquals(token.getUsername(), "supervisor");
+        Assert.assertNotNull(token.getToken());
+        Assert.assertEquals(token.getAccountType(), AccountType.CSR);
+
+    }
+
 }

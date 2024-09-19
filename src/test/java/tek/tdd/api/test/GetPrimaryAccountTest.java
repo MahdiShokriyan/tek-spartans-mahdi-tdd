@@ -34,4 +34,6 @@ public class GetPrimaryAccountTest extends ApiTestsBase {
         response.prettyPrint();
         Assert.assertEquals(errorMessage, "Account with id 100 not exist");
     }
+
+
 }

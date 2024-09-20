@@ -30,7 +30,7 @@ public class TokenGenerationTests extends ApiTestsBase {
 
     //Create a test validate token generated with supervisor User
     @Test(dataProvider = "credentials")
-    public void generateValidToken(String username, String password) {
+    public void getValidTokenTest(String username, String password) {
         Response response = loginWithCredential(username, password);
         response.then().statusCode(200);
         LOGGER.info("Response is {}", response.asPrettyString());

@@ -29,9 +29,9 @@ public class ApiTestsBase extends BaseSetup {
         return body;
     }
 
-    public String generateTokenOfSupervisor(){
+    public String generateValidToken(String username, String password){
         TokenRequest tokenRequest = new TokenRequest(
-                "supervisor", "tek_supervisor");
+                username, password);
        return getDefaultRequest()
                 .body(tokenRequest)
                 .when()
@@ -42,19 +42,5 @@ public class ApiTestsBase extends BaseSetup {
                 .jsonPath().getString("token");
 
     }
-    public String generateTokenOfSReadOnly(){
-        TokenRequest tokenRequest = new TokenRequest(
-                "operator_readonly", "Tek4u2024");
-        return getDefaultRequest()
-                .body(tokenRequest)
-                .when()
-                .post(EndPoints.TOKEN.getValue())
-                .then().statusCode(200)
-                .extract()
-                .response()
-                .jsonPath().getString("token");
-
-    }
-
 
 }

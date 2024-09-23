@@ -17,7 +17,7 @@ public class UserProfileTest extends ApiTestsBase {
                                              String expectedFullName, String expectedRole) {
         String token = generateValidToken(username, password);
         Response response = getDefaultRequest()
-                .header("Authorization", "Bearer " + token)
+                .header("Authorization", token)
                 .when().get(EndPoints.USER_PROFILE.getValue())
                 .then().statusCode(200)
                 .extract().response();

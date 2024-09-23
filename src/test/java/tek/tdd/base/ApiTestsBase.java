@@ -32,7 +32,7 @@ public class ApiTestsBase extends BaseSetup {
     public String generateValidToken(String username, String password){
         TokenRequest tokenRequest = new TokenRequest(
                 username, password);
-       return getDefaultRequest()
+       return ("Bearer" ) + getDefaultRequest()
                 .body(tokenRequest)
                 .when()
                 .post(EndPoints.TOKEN.getValue())

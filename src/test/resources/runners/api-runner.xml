@@ -2,7 +2,7 @@
 <suite name="Spartans TestNG Framework">
     <test name="Smoke Tests">
         <packages>
-            <package name="tek.tdd.tests" />
+            <package name="tek.tdd.api.test" />
         </packages>
     </test>
 </suite>
